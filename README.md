@@ -1,4 +1,4 @@
-# aDDM WIN/LOSS Lottery Task
+# aDDM Win/Loss Lottery Task
 
 
 ## Overview
