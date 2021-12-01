@@ -29,6 +29,38 @@ expdata.curBlock = 0;
 SaveWithoutOverwrite([expdata.fname '_Setup'], expdata);
 
 
+%% Experiment
+
+%Instructions Screen
+Screen('FillRect', expdata.windowPtr, expdata.colorBackground);     %Fill the background as a black screen
+text = sprintf('<TITLE> EXPERIMENT\n\n\n\n\n\n Instructions. \n\n\n Press SPACE BAR to begin the task.');
+DrawFormattedText(expdata.windowPtr, text, 'center', 'center', expdata.colorText);
+Screen(expdata.windowPtr, 'Flip');                                  %Flip to screen
+WaitSecs(.5);
+
+KbWaitForKeys(expdata.keySpace, Inf);                       %Wait for LEFT/RIGHT Key press
+
+if expdata.etSwitch == 1
+    Eyelink('Command', 'record_status_message "Practice BLOCK"');
+end
+
+%% PRACTICE TRIALS
+if expdata.practiceSwitch == true
+    % Begin screen
+    Screen('FillRect', expdata.windowPtr, expdata.colorBackground);
+    text = sprintf(['Practice trials about to begin...']);
+    DrawFormattedText(expdata.windowPtr, text, 'center', 'center', expdata.colorText);
+    Screen(expdata.windowPtr, 'Flip');
+    WaitSecs(2);
+
+    for trialNum = 1:16
+        expdata.trialNum = trialNum;
+
+        run_practice_trials(expdata,eyeLink);
+    end
+end
+
+
 %% EYE-TRACKING SETUP
 if expdata.etSwitch == 1
     eyeLink = EyelinkInitDefaults(expdata.windowPtr);
@@ -93,40 +125,9 @@ if expdata.etSwitch == 1
     %         Do a final check of calibration using drift correction.
     success = EyelinkDoDriftCorrection(eyeLink);
     if success~=1
-        FinalCleanUp;
+        CloseExperiment(expdata);
         disp('Eyelink calibration failed.');
         return;
-    end
-end
-
-%% Experiment
-
-%Instructions Screen
-Screen('FillRect', expdata.windowPtr, expdata.colorBackground);     %Fill the background as a black screen
-text = sprintf('<TITLE> EXPERIMENT\n\n\n\n\n\n Instructions. \n\n\n Press SPACE BAR to begin the task.');
-DrawFormattedText(expdata.windowPtr, text, 'center', 'center', expdata.colorText);
-Screen(expdata.windowPtr, 'Flip');                                  %Flip to screen
-WaitSecs(.5);
-
-KbWaitForKeys(expdata.keySpace, Inf);                       %Wait for LEFT/RIGHT Key press
-
-if expdata.etSwitch == 1
-    Eyelink('Command', 'record_status_message "Practice BLOCK"');
-end
-
-%% PRACTICE TRIALS
-if expdata.practiceSwitch == true
-    % Begin screen
-    Screen('FillRect', expdata.windowPtr, expdata.colorBackground);
-    text = sprintf(['Practice trials about to begin...']);
-    DrawFormattedText(expdata.windowPtr, text, 'center', 'center', expdata.colorText);
-    Screen(expdata.windowPtr, 'Flip');
-    WaitSecs(2);
-
-    for trialNum = 1:16
-        expdata.trialNum = trialNum;
-
-        run_practice_trials(expdata,eyeLink);
     end
 end
 
@@ -180,7 +181,32 @@ DrawFormattedText(expdata.windowPtr, text, 'center', 'center', expdata.colorText
 Screen(expdata.windowPtr, 'Flip');                                  %Draw previous commands to the screen
 KbWaitForKeys(expdata.keySpace, Inf);                               %Wait for user input
 
-%Instructions Screen
+
+%% Eye-Tracking Calibration
+if expdata.etSwitch == 1
+%         Set calibration and text parameters.
+    Eyelink('Command', 'calibration_type = HV5');
+    eyeLink.backgroundcolour = 0;    
+    eyeLink.calibrationtargetcolour = [255 255 255];
+    eyeLink.msgfont = expdata.textFont;
+    eyeLink.msgfontsize = expdata.textSize;
+    eyeLink.msgfontcolour = expdata.colorText;
+    EyelinkUpdateDefaults(eyeLink);
+
+    %         Calibrate the eye tracker.
+    EyelinkDoTrackerSetup(eyeLink);
+
+    %         Do a final check of calibration using drift correction.
+    success = EyelinkDoDriftCorrection(eyeLink);
+    if success~=1
+        CloseExperiment(expdata);
+        disp('Eyelink calibration failed.');
+        return;
+    end
+end
+
+
+%% Instructions Screen
 Screen('FillRect', expdata.windowPtr, expdata.colorBackground);     %Fill the background as a black screen
 text = sprintf('<TITLE> BLOCK 2\n\n\n\n\n\n Instructions. \n\n\n Press SPACE BAR to begin the task.');
 DrawFormattedText(expdata.windowPtr, text, 'center', 'center', expdata.colorText);
@@ -264,11 +290,4 @@ if expdata.etSwitch == 1
 end
 
 CloseExperiment(expdata);
-
-
-
-
-
-
-
 
