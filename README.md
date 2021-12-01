@@ -1,4 +1,4 @@
-# Binary Choice Monetary Lottery Task
+# aDDM WIN/LOSS Lottery Task
 
 
 ## Overview
