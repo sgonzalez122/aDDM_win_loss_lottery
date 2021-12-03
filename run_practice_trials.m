@@ -81,7 +81,7 @@ end
 
     % Left Circle Containter
     my_circle(expdata.windowPtr, [],expdata.leftCircleCenterX,... 
-        expdata.leftCircleCenterY,expdata.circleRadius,expdata.whiteCircle,1); 
+        expdata.leftCircleCenterY,expdata.circleRadius,expdata.whiteCircle,expdata.circleContour); 
     
     % Generate 100 random cetners
     centers = generateCenters(expdata,1);
@@ -101,7 +101,7 @@ end
     %% Right Stimuli
     % Right Circle Containter
     my_circle(expdata.windowPtr, [],expdata.rightCircleCenterX,... 
-        expdata.rightCircleCenterY,expdata.circleRadius,expdata.whiteCircle,1);
+        expdata.rightCircleCenterY,expdata.circleRadius,expdata.whiteCircle,expdata.circleContour);
 
     % Generate 100 random cetners
     centers = generateCenters(expdata,2);
