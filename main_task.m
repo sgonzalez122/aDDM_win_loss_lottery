@@ -33,8 +33,8 @@ SaveWithoutOverwrite([expdata.fname '_Setup'], expdata);
 if expdata.etSwitch == 1
     eyeLink = EyelinkInitDefaults(expdata.windowPtr);
 
-    %         Initialization of the connection with the Eyelink Gazetracker.
-    %         Exit program if this fails.
+    % Initialization of the connection with the Eyelink Gazetracker.
+    % Exit program if this fails.
     dummyMode = 0; % 1 = run in dummy mode, 0 = run for real
     if ~EyelinkInit(dummyMode)
         disp('Eyelink Init aborted.');
@@ -42,8 +42,8 @@ if expdata.etSwitch == 1
         return;
     end
 
-    %         Open file to record data to.
-    expdata.edfFile = [expdata.SID '.edf'];    
+    % Open file to record data to.
+    expdata.edfFile = [expdata.SID '_' block_type '.edf'];    
     res = Eyelink('OpenFile', expdata.edfFile);
     if res~=0
         fprintf('Cannot create EDF file ''%s''\n', expdata.edfFile);
@@ -51,10 +51,10 @@ if expdata.etSwitch == 1
         return;
     end
 
-    %         Retrieve eye tracker version.
+    % Retrieve eye tracker version.
     [~, vs] = Eyelink('GetTrackerVersion');
 
-    %         Set EDF file contents.
+    % Set EDF file contents.
     if vs >=4 
         Eyelink('Command', ['file_sample_data = ' ...
             'LEFT,RIGHT,GAZE,HREF,AREA,HTARGET,GAZERES,STATUS,INPUT']);
@@ -71,14 +71,14 @@ if expdata.etSwitch == 1
         'EyelinkToolbox for Experiment ' ...
         'by StephenG"']);
 
-    %         Make sure we are still connected.
+    % Make sure we are still connected.
     if Eyelink('IsConnected') ~= 1 && dummyMode == 0
         disp('Not connected to eye tracker, cleaning up.');
         FinalCleanUp;
         return;
     end
 
-    %         Set calibration and text parameters.
+    % Set calibration and text parameters.
     Eyelink('Command', 'calibration_type = HV5');
     eyeLink.backgroundcolour = 0;    
     eyeLink.calibrationtargetcolour = [255 255 255];
@@ -87,10 +87,10 @@ if expdata.etSwitch == 1
     eyeLink.msgfontcolour = expdata.colorText;
     EyelinkUpdateDefaults(eyeLink);
 
-    %         Calibrate the eye tracker.
+    % Calibrate the eye tracker.
     EyelinkDoTrackerSetup(eyeLink);
 
-    %         Do a final check of calibration using drift correction.
+    % Do a final check of calibration using drift correction.
     success = EyelinkDoDriftCorrection(eyeLink);
     if success~=1
         CloseExperiment(expdata);
@@ -175,6 +175,27 @@ else
 end    
     
 
+%% SAVE OUT BLOCK 1 EYE-TRACKING DATA
+if expdata.etSwitch == 1
+    % Close eye tracking data file.
+    Eyelink('Command', 'set_idle_mode');
+    WaitSecs(0.5);
+    Eyelink('CloseFile');
+    % Download eye tracking data file.
+    try
+        fprintf('Receiving data file ''%s''...\n', expdata.edfFile);
+        status = Eyelink('ReceiveFile');
+        if status > 0
+            fprintf('ReceiveFile status %d\n', status);
+        end
+    catch
+        save(['eyelink_file_error_' datestr(now, 30)]);
+        fprintf('Problem receiving data file ''%s''\n', expdata.edfFile);
+        psychrethrow(psychlasterror);
+    end
+end
+
+
 %% INTERMISSION SCREEN
 Screen('FillRect', expdata.windowPtr, expdata.colorBackground);
 text = sprintf(['You have completed PART 1 of the experiment.\n\n\n\n\n Feel free to take a break before continueing\n\n Press the SPACE-BAR when ready to continue.']);
@@ -183,9 +204,61 @@ Screen(expdata.windowPtr, 'Flip');                                  %Draw previo
 KbWaitForKeys(expdata.keySpace, Inf);                               %Wait for user input
 
 
-%% Eye-Tracking Calibration
+%% EYE-TRACKING SETUP
 if expdata.etSwitch == 1
-%         Set calibration and text parameters.
+    eyeLink = EyelinkInitDefaults(expdata.windowPtr);
+
+    % Initialization of the connection with the Eyelink Gazetracker.
+    % Exit program if this fails.
+    dummyMode = 0; % 1 = run in dummy mode, 0 = run for real
+    if ~EyelinkInit(dummyMode)
+        disp('Eyelink Init aborted.');
+        FinalCleanUp;
+        return;
+    end
+
+    % Open file to record data to.
+    if strcmp(block_type, 'win')
+        expdata.edfFile = [expdata.SID '_loss.edf'];    
+    elseif strcmp(block_type, 'loss')
+        expdata.edfFile = [expdata.SID '_win.edf'];
+    end
+
+    res = Eyelink('OpenFile', expdata.edfFile);
+    if res~=0
+        fprintf('Cannot create EDF file ''%s''\n', expdata.edfFile);
+        CloseExperiment(expdata);
+        return;
+    end
+
+    % Retrieve eye tracker version.
+    [~, vs] = Eyelink('GetTrackerVersion');
+
+    % Set EDF file contents.
+    if vs >=4 
+        Eyelink('Command', ['file_sample_data = ' ...
+            'LEFT,RIGHT,GAZE,HREF,AREA,HTARGET,GAZERES,STATUS,INPUT']);
+        Eyelink('Command', ['link_sample_data = ' ...
+            'LEFT,RIGHT,GAZE,GAZERES,AREA,HTARGET,STATUS,INPUT']);       
+    else
+        Eyelink('Command', ['file_sample_data = ' ...
+            'LEFT,RIGHT,GAZE,HREF,AREA,GAZERES,STATUS,INPUT']);
+        Eyelink('Command', ['link_sample_data = ' ...
+            'LEFT,RIGHT,GAZE,GAZERES,AREA,STATUS,INPUT']);
+    end
+
+    Eyelink('Command', ['add_file_preamble_text "Recorded by ' ...
+        'EyelinkToolbox for Experiment ' ...
+        'by StephenG"']);
+
+    % Make sure we are still connected.
+    if Eyelink('IsConnected') ~= 1 && dummyMode == 0
+        disp('Not connected to eye tracker, cleaning up.');
+        FinalCleanUp;
+        return;
+    end
+
+    % Set calibration and text parameters.
     Eyelink('Command', 'calibration_type = HV5');
     eyeLink.backgroundcolour = 0;    
     eyeLink.calibrationtargetcolour = [255 255 255];
@@ -194,10 +267,10 @@ if expdata.etSwitch == 1
     eyeLink.msgfontcolour = expdata.colorText;
     EyelinkUpdateDefaults(eyeLink);
 
-    %         Calibrate the eye tracker.
+    % Calibrate the eye tracker.
     EyelinkDoTrackerSetup(eyeLink);
 
-    %         Do a final check of calibration using drift correction.
+    % Do a final check of calibration using drift correction.
     success = EyelinkDoDriftCorrection(eyeLink);
     if success~=1
         CloseExperiment(expdata);
@@ -291,4 +364,3 @@ if expdata.etSwitch == 1
 end
 
 CloseExperiment(expdata);
-
