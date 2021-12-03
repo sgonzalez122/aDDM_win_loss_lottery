@@ -147,6 +147,7 @@ expdata.rightCircleRangeX = [(expdata.rightCircleCenterX - expdata.circleRadius)
 expdata.rightCircleRangeY = [(expdata.rightCircleCenterY - expdata.circleRadius) + 10 ...
                                 (expdata.rightCircleCenterY + expdata.circleRadius) - 10];
 
+expdata.circleContour = 1;
 
 expdata.ballProb = (45:55);                                             % Probability of Balls for trial stimuli
 
