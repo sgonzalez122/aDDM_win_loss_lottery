@@ -6,7 +6,7 @@ if expdata.etSwitch == 1
     
     %% DISPLAY FIXATION CROSS
     % Setup eye tracker for recording trial.
-    message = sprintf('TRIALID T_%d_%d', expdata.curBlock, expdata.trialNum);
+    message = sprintf('TRIALID T_%d', expdata.trialNum);
     Eyelink('Message', message);
     Eyelink('StartRecording');
     eyeUsed = Eyelink('EyeAvailable');
