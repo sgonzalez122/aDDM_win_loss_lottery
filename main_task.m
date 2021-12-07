@@ -102,6 +102,7 @@ end
 
 %% Experiment
 
+%{
 %Instructions Screen
 Screen('FillRect', expdata.windowPtr, expdata.colorBackground);     %Fill the background as a black screen
 text = sprintf('<TITLE> EXPERIMENT\n\n\n\n\n\n Instructions. \n\n\n Press SPACE BAR to begin the task.');
@@ -110,6 +111,7 @@ Screen(expdata.windowPtr, 'Flip');                                  %Flip to scr
 WaitSecs(.5);
 
 KbWaitForKeys(expdata.keySpace, Inf);                       %Wait for LEFT/RIGHT Key press
+%}
 
 if expdata.etSwitch == 1
     Eyelink('Command', 'record_status_message "Practice BLOCK"');
@@ -128,7 +130,12 @@ if expdata.practiceSwitch == true
     for trialNum = 1:16
         expdata.trialNum = trialNum;
 
-        run_practice_trials(expdata,eyeLink);
+        if expdata.etSwitch == 1
+            run_practice_trials(expdata,eyeLink);
+        else
+            run_practice_trials(expdata);
+        end
+        
     end
 end
 
@@ -151,7 +158,11 @@ if strcmp(block_type, 'win')
     for trialNum = 1:expdata.numTrials
         expdata.trialNum = trialNum; %Save current trial number
 
-        expdata = run_win_block(expdata,eyeLink);
+        if expdata.etSwitch == 1
+            expdata = run_win_block(expdata,eyeLink);
+        else 
+            expdata = run_win_block(expdata);
+        end
     end
     
 else
@@ -281,6 +292,7 @@ end
 
 
 %% Instructions Screen
+%{
 Screen('FillRect', expdata.windowPtr, expdata.colorBackground);     %Fill the background as a black screen
 text = sprintf('<TITLE> BLOCK 2\n\n\n\n\n\n Instructions. \n\n\n Press SPACE BAR to begin the task.');
 DrawFormattedText(expdata.windowPtr, text, 'center', 'center', expdata.colorText);
@@ -288,7 +300,7 @@ Screen(expdata.windowPtr, 'Flip');                                  %Flip to scr
 WaitSecs(.5);
 
 KbWaitForKeys(expdata.keySpace, Inf);                       %Wait for LEFT/RIGHT Key press
-
+%}
 
 %% BLOCK 2
 expdata.curBlock = expdata.curBlock + 1;
@@ -308,7 +320,11 @@ if strcmp(block_type, 'win')
     for trialNum = 1:expdata.numTrials
         expdata.trialNum = trialNum; % Save current trial number
 
-        expdata = run_loss_block(expdata,eyeLink);
+        if expdata.etSwitch == 1
+            expdata = run_loss_block(expdata,eyeLink);
+        else 
+            expdata = run_loss_block(expdata);
+        end
     end
     
 else
@@ -364,3 +380,11 @@ if expdata.etSwitch == 1
 end
 
 CloseExperiment(expdata);
+
+
+
+
+
+
+
+
