@@ -43,7 +43,7 @@ expdata.practiceSwitch = 1;
 %Switch for turing ON/OFF the Eye-Trackter code
 expdata.etSwitch = 1;
 
-expdata.debug = true;
+expdata.debug = false;
         
 %% ************************************************************************
 %       EXPERIMENT DATA Structures
