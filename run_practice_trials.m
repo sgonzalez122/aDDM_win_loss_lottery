@@ -8,6 +8,7 @@ if expdata.etSwitch == 1
     % Setup eye tracker for recording trial.
     message = sprintf('TRIALID T_%d_%d', 0, expdata.trialNum);
     Eyelink('Message', message);
+    Eyelink('StartRecording');
     eyeUsed = Eyelink('EyeAvailable');
     
     DisplayFixationCross(expdata);
@@ -142,6 +143,10 @@ end
                     expdata.circleRadius*2 + 50, expdata.lineWidth);
                 Screen('Flip',expdata.windowPtr);
                 WaitSecs(expdata.timeSelectionBox); %0.5 Sec
+        end
+        if expdata.etSwitch == 1
+            Eyelink('StopRecording');
+            Eyelink('Message', 'TRIAL OK');
         end
     end
     
