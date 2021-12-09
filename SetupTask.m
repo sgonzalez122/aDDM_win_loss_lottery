@@ -129,6 +129,7 @@ else
 end
 
 expdata.circleBuffer = expdata.circleRadius * .10;
+expdata.circleContour = 1;
 
 % Circle Centers
 % Center coordinates for the Cirlce Containers
