@@ -180,8 +180,13 @@ else
     % Run Loss Block
     for trialNum = 1:expdata.numTrials
         expdata.trialNum = trialNum; % Save current trial number
+        
+        if expdata.etSwitch == 1 
+            expdata = run_loss_block(expdata,eyeLink);
+        else
+            expdata = run_loss_block(expdata);
+        end
 
-        expdata = run_loss_block(expdata,eyeLink);
     end
 end    
     
@@ -342,8 +347,13 @@ else
     % Run Win Block
     for trialNum = 1:expdata.numTrials
         expdata.trialNum = trialNum; %Save current trial number
-
-        expdata = run_win_block(expdata,eyeLink);
+    
+        if expdata.etSwitch == 1
+            expdata = run_win_block(expdata,eyeLink);
+        else
+            expdata = run_win_block(expdata);
+        end
+        
     end
 end
         
