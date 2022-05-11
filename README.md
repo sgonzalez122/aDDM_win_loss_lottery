@@ -28,3 +28,7 @@
 * The stimuli are then assembled as 2 circles each with 100 balls inside. p of them are colored in RED for LOSS trials and GREEN for WIN trials, and 1-p of them are colored WHITE. The location of the balls within the circle is randomized for each stimulus. 
 * At the end of the experiment the participant picks a number labelled 1-200 from an urn and the lottery chosen in that trial in both the WIN and LOSS trials is played. (This is done by preparing an urn with the right number of balls and randomly choosing one for each case). 
 * Participants are paid a $40 show-up fee + whatever they earn/loose from the randomly chosen lottery trials.
+
+## Operating Instructions
+1. Download this repository to your computer
+2. 
