@@ -31,4 +31,13 @@
 
 ## Operating Instructions
 1. Download this repository to your computer
-2. 
+2. This version of the task is set-up for data collection with the EyeLink 1000 Eye Tracker, do not change any settings unless otherwise instructed. 
+     - A demo version of this is available in a seperate repository that can be run without the Eye-Tracker. 
+     - Task will not run if it cannot connect to EyeLink.
+3. Download Psychtoolbox and add the location to your Matlab PATH. 
+4. Open the "main_task.m" file and Click the "RUN" button in your Matlab interface
+5. Enter Subject ID
+6. Enter which Block to start with
+     - Type "win" to start with the WIN Block first
+     - Type "los" to start with the LOSS Block first
+7. 
