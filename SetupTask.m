@@ -18,7 +18,7 @@ expdata.fname = [expdata.dataDir 'expdata_' SID];
 %% ************************************************************************
 %       EXPERIMENT PARAMETERS
 %**************************************************************************
-expdata.numTrials_practice = 8;     % Number of practice trials
+expdata.numTrials_practice = 4;     % Number of practice trials
 expdata.numTrials = 5;              % Number of trials
 
 expdata.timeFixationScreen = .5;    % Time for fixation cross
