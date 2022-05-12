@@ -19,7 +19,7 @@ expdata.fname = [expdata.dataDir 'expdata_' SID];
 %       EXPERIMENT PARAMETERS
 %**************************************************************************
 expdata.numTrials_practice = 8;     % Number of practice trials
-expdata.numTrials = 200;              % Number of trials
+expdata.numTrials = 5;              % Number of trials
 
 expdata.timeFixationScreen = .5;    % Time for fixation cross
 expdata.timeDecisionPhase = Inf;    % Time Subject has to make a choice    
@@ -41,7 +41,7 @@ expdata.devScreen = 0;
 expdata.practiceSwitch = 1;    
 
 %Switch for turing ON/OFF the Eye-Trackter code
-expdata.etSwitch = 1;
+expdata.etSwitch = 0;
 
 expdata.debug = false;
         
