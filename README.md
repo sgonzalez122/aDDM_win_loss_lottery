@@ -29,7 +29,7 @@
 7. Block of 5 trials
 8. Random selection of trials that count for payoff and payment
 
-## Main Task description
+## Description of Main Version of the Task
 * Subjects perform 400 trials of the task, divided into two 200 trial blocks: one for wins and one for losses, with order counterbalanced across subjects
 * Each trial the probability of each WIN or LOSS shown on the screen is selected independently from p = 45%, 46%, ...., 55%
 * The stimuli are then assembled as 2 circles each with 100 balls inside. p of them are colored in RED for LOSS trials and GREEN for WIN trials, and 1-p of them are colored WHITE. The location of the balls within the circle is randomized for each stimulus. 
