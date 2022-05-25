@@ -134,7 +134,7 @@ end
             my_square(expdata.windowPtr, expdata.colorBox, expdata.leftCircleCenterX, expdata.leftCircleCenterY,...
                     expdata.circleRadius*2 + 50, expdata.lineWidth);
                 Screen('Flip',expdata.windowPtr);
-                WaitSecs(expdata.timeSelectionBox); %0.5 Sec
+                WaitSecs(expdata.timeSelectionBox); %1 Sec
         
         % If Right Response 
         elseif keyCode(expdata.keyRight)
@@ -142,7 +142,7 @@ end
             my_square(expdata.windowPtr, expdata.colorBox, expdata.rightCircleCenterX, expdata.rightCircleCenterY,...
                     expdata.circleRadius*2 + 50, expdata.lineWidth);
                 Screen('Flip',expdata.windowPtr);
-                WaitSecs(expdata.timeSelectionBox); %0.5 Sec
+                WaitSecs(expdata.timeSelectionBox); %1 Sec
         end
         if expdata.etSwitch == 1
             Eyelink('StopRecording');
