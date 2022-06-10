@@ -41,5 +41,5 @@
      - Type "win" to start with the WIN Block first
      - Type "los" to start with the LOSS Block first
 7. Perform Calibration
-8. At the end of the task press "E" to save out the data and close the experiment
+8. At the end of the task press "e" to save out the data and close the experiment
 9. Behavioral data will be placed in the expdata forlder and the Eye Tracking Data will be placed in the main directory.
