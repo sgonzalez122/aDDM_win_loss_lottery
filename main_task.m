@@ -18,7 +18,7 @@ SID = input('Enter SID: ','s'); %Request Subject ID
 while true 
     block_type = input('Enter Block Type: ','s'); %Request Block Type
     
-    if strcmp(block_type, 'win') || strcmp(block_type, 'loss') %Only exit once the appropriate input has been given
+    if strcmp(block_type, 'win') || strcmp(block_type, 'los') %Only exit once the appropriate input has been given
         break;   
     end
 end
@@ -233,11 +233,11 @@ if expdata.etSwitch == 1
         return;
     end
 
-    % Open file to record data to.
-    if strcmp(block_type, 'win')
-        expdata.edfFile = [expdata.SID '_loss.edf'];    
-    elseif strcmp(block_type, 'loss')
-        expdata.edfFile = [expdata.SID '_win.edf'];
+    % Open file to record data to. Open opposite of starting block 
+    if strcmp(block_type, 'win')                       % If starting block win
+        expdata.edfFile = [expdata.SID '_loss.edf'];   % Open loss edf file 
+    elseif strcmp(block_type, 'los')                   % If starting Block loss 
+        expdata.edfFile = [expdata.SID '_win.edf'];    % Open Win edf file 
     end
 
     res = Eyelink('OpenFile', expdata.edfFile);
