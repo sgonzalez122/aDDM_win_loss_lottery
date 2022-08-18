@@ -235,7 +235,7 @@ if expdata.etSwitch == 1
 
     % Open file to record data to. Open opposite of starting block 
     if strcmp(block_type, 'win')                       % If starting block win
-        expdata.edfFile = [expdata.SID '_loss.edf'];   % Open loss edf file 
+        expdata.edfFile = [expdata.SID '_los.edf'];   % Open loss edf file 
     elseif strcmp(block_type, 'los')                   % If starting Block loss 
         expdata.edfFile = [expdata.SID '_win.edf'];    % Open Win edf file 
     end
